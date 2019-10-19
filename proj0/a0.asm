@@ -77,7 +77,7 @@ pm32_start:
   mov eax, slct_video
   mov ds, eax
   
- ;mov ebx, msg-0x10000 --
+ ;mov ebx, msg-0x10000 -- ;;;
   xor ebx,ebx
   mov ebx, msg
  mov esi, 0
