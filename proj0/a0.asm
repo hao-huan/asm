@@ -64,6 +64,11 @@ start:
   or eax, gate_pe
   mov cr0, eax
   
+  ;push eax 
+  ;mov eax, slct_code 
+  ;mov eax, pm32_start 
+  ;pop eax 
+  
   jmp dword slct_code:(pm32_start - 0x7c00)
 
  msg  db 'Already in protect mode...'
