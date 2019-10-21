@@ -3,7 +3,8 @@ jmp start
 
 gdt_beg:
   desc_sg_null dd 0000_0000_0000_0000_0000_0000_0000_0000b, 0000_0000_0000_0000_0000_0000_0000_0000b
-  desc_sg_code dd 0111_1100_0000_0000_0000_0001_1111_1111b, 0000_0000_0100_0000_1001_1010_0000_0000b ; TYPE=1010,代码段必须可读，否则msg中的内容是无法读出并写到显卡中的
+  desc_sg_code dd 0000_0000_0000_0000_0000_0001_1111_1111b, 0000_0000_0100_0000_1001_1010_0000_0001b ; TYPE=1010,代码段必须可读，否则msg中的内容是无法读出并写到显卡中的
+  ;desc_sg_code dd 0111_1100_0000_0000_0000_0001_1111_1111b, 0000_0000_0100_0000_1001_1010_0000_0000b ; TYPE=1010,代码段必须可读，否则msg中的内容是无法读出并写到显卡中的
 
   desc_sg_video dd 1000_0000_0000_0000_1111_1111_1111_1111b, 0000_0000_0100_0000_1001_0010_0000_1011b
 
@@ -69,7 +70,10 @@ start:
   ;mov eax, pm32_start 
   ;pop eax 
   
-  jmp dword slct_code:(pm32_start - 0x7c00)
+  ;jmp dword slct_code:(pm32_start - 0x7c00)
+  ;jmp 0000_1000b:0000_0000b
+  ;jmp dword slct_code:(pm32_start - 0x7c00)
+   jmp dword slct_code:pm32_start
 
  msg  db 'Already in protect mode...'
  len_msg equ $-msg
@@ -79,7 +83,9 @@ pm32_start:
   mov eax, slct_video
   mov ds, eax
   
- mov ebx, msg-0x7c00
+ ;mov ebx, msg-0x10000 -- ;;;
+  xor ebx,ebx
+  mov ebx, msg
  mov esi, 0
  mov edi, 0
 
