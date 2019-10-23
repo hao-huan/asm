@@ -89,12 +89,16 @@ pm32_start:
  mov esi, 0
  mov edi, 0
 
+ ;mov cx, 0000_0000_0000_0010b
+; mov ecx, 0000_0000_0000_0000_0000_0000_0001_0000b
+ mov ecx, len_msg
 .lp: 
   mov al, [cs: ebx+esi]
   mov [edi], al
   inc esi
   add edi, 2
   loop .lp
+ ; jmp $
 
   mov eax, slct_stack
   mov ss, eax
@@ -108,6 +112,10 @@ pm32_start:
   pop eax
   mov [0x1A], al
   mov byte [0x1C], ' '
+
+
+  in al, 0000_0000b
+  out 0000_0000b, al
   
 .tail: jmp $
   
